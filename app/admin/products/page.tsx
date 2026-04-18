@@ -844,11 +844,6 @@ export default function ProductsPage() {
       return
     }
     
-    if (!formData.category) {
-      alert("Ангилал сонгоно уу (Please select category)")
-      return
-    }
-    
     if (!shouldShowFields()) {
       alert("Үндсэн ангилал сонгоно уу (Please select main category first)")
       return
@@ -1369,11 +1364,10 @@ export default function ProductsPage() {
               {/* Subcategory Selection - Show after main category is selected or when editing */}
               {((selectedMainCategory && availableSubcategories.length > 0) || (editingProduct && formData.category)) && (
                 <div className="grid gap-2">
-                  <Label htmlFor="category">Ангилал (Category) *</Label>
+                  <Label htmlFor="category">Ангилал (Category)</Label>
                   <Select
                     value={formData.category}
                     onValueChange={handleSubcategoryChange}
-                    required
                   >
                     <SelectTrigger id="category">
                       <SelectValue placeholder="Ангилал сонгох" />
