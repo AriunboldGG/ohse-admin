@@ -92,7 +92,7 @@ export default function QuotesPage() {
   const [quoteNumber, setQuoteNumber] = useState<string>("")
   const [quoteDate, setQuoteDate] = useState<string>("")
   const [companyNote, setCompanyNote] = useState<string>("")
-  const [companyName, setCompanyName] = useState<string>("БАЯН ӨНДӨР ХХК")
+  const [companyName, setCompanyName] = useState<string>("OHSE ХХК")
   const [companyAddress, setCompanyAddress] = useState<string>("УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
   const [companyEmail, setCompanyEmail] = useState<string>("sales1@ohse.mn")
   const [companyPhone, setCompanyPhone] = useState<string>("70118585")
@@ -114,7 +114,7 @@ export default function QuotesPage() {
       setQuoteDate(currentDate)
       
       // Initialize Компанийн тэмдэглэл and company info from saved data
-      setCompanyName((selectedQuote as any).companyName || "БАЯН ӨНДӨР ХХК")
+      setCompanyName((selectedQuote as any).companyName || "OHSE ХХК")
       setCompanyNote((selectedQuote as any).companyNote || "")
       setCompanyAddress((selectedQuote as any).companyAddress || "УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
       setCompanyEmail((selectedQuote as any).companyEmail || "sales1@ohse.mn")
@@ -165,7 +165,7 @@ export default function QuotesPage() {
       // Reset when dialog closes
       setQuoteNumber("")
       setQuoteDate("")
-      setCompanyName("БАЯН ӨНДӨР ХХК")
+      setCompanyName("OHSE ХХК")
       setCompanyNote("")
       setCompanyAddress("УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
       setCompanyEmail("sales1@ohse.mn")
@@ -3034,7 +3034,7 @@ export default function QuotesPage() {
                     const hasChanges = 
                       companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "БАЯН ӨНДӨР ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
@@ -3471,7 +3471,7 @@ export default function QuotesPage() {
                       paymentDueDate !== ((selectedQuote as any).paymentDueDate || "") ||
                       companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "БАЯН ӨНДӨР ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
@@ -3791,7 +3791,7 @@ export default function QuotesPage() {
                       <Input
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
-                        placeholder="БАЯН ӨНДӨР ХХК"
+                        placeholder="OHSE ХХК"
                       />
                     </div>
                     <div>
@@ -3907,7 +3907,7 @@ export default function QuotesPage() {
                       spentDate !== ((selectedQuote as any).spentDate || "") ||
                       companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "БАЯН ӨНДӨР ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
