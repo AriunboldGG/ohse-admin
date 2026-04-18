@@ -839,11 +839,6 @@ export default function ProductsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!formData.productSector.length) {
-      alert("Салбарын ангилал сонгоно уу (Please select product sector)")
-      return
-    }
-    
     if (!selectedMainCategory) {
       alert("Үндсэн ангилал сонгоно уу (Please select main category)")
       return
@@ -1287,7 +1282,7 @@ export default function ProductsPage() {
             <div className="grid gap-4 py-4">
               {/* Product Sector Selection */}
               <div className="grid gap-2">
-                <Label htmlFor="productSector">Салбарын ангилал (Product Sector) *</Label>
+                <Label htmlFor="productSector">Салбарын ангилал (Product Sector)</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
