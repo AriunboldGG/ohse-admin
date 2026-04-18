@@ -113,7 +113,7 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center bg-background p-4 sm:p-6">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-3xl">Bayanundur Admin</CardTitle>
+          <CardTitle className="text-3xl">OHSE</CardTitle>
           <CardDescription>
             Sign in to access your admin dashboard
           </CardDescription>

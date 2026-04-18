@@ -1,6 +1,6 @@
-# Bayanundur Admin
+# OHSE
 
-Next.js application for Bayanundur Admin Dashboard.
+Next.js application for OHSE Dashboard.
 
 ## Getting Started
 

@@ -3,8 +3,8 @@ import './globals.css'
 import { Providers } from '@/components/providers'
 
 export const metadata: Metadata = {
-  title: 'Bayanundur Admin',
-  description: 'Bayanundur Admin Dashboard',
+  title: 'OHSE',
+  description: 'OHSE Dashboard',
 }
 
 export default function RootLayout({

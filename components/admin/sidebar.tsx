@@ -76,7 +76,7 @@ export function Sidebar() {
   return (
     <div className="flex h-full w-64 flex-col border-r bg-card">
       <div className="flex h-16 items-center border-b px-4 sm:px-6">
-        <h1 className="text-lg sm:text-xl font-bold truncate">Bayanundur Admin</h1>
+        <h1 className="text-lg sm:text-xl font-bold truncate">OHSE</h1>
       </div>
       <nav className="flex-1 space-y-1 p-2 sm:p-4 overflow-y-auto">
         {navigation.map((item) => {

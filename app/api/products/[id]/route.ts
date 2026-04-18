@@ -125,7 +125,7 @@ async function uploadImagesToStorage(files: File[]): Promise<string[]> {
         throw new Error(
           `Storage bucket "${bucket.name}" does not exist and could not be created automatically. ` +
           `Please enable Firebase Storage in Firebase Console: ` +
-          `https://console.firebase.google.com/project/bayanundur-backend/storage ` +
+          `https://console.firebase.google.com/project/ohse-backend/storage ` +
           `The bucket will be created automatically when you enable Storage.`
         );
       }
