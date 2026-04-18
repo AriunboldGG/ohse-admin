@@ -167,17 +167,13 @@ export default function ProductsPage() {
   const [categoriesList, setCategoriesList] = useState<CategoryItem[]>([])
   const [subcategoriesList, setSubcategoriesList] = useState<SubcategoryItem[]>([])
   const [productSectors, setProductSectors] = useState<ProductSectorItem[]>([])
+  const [brandsList, setBrandsList] = useState<{ id: string; name: string }[]>([])
   const [productImages, setProductImages] = useState<string[]>([]) // Array of image URLs
   const [imageFiles, setImageFiles] = useState<File[]>([]) // Array of File objects for new uploads
   const [imagePreviews, setImagePreviews] = useState<string[]>([]) // Array of preview URLs
   const [isUploadingImages, setIsUploadingImages] = useState(false)
   const [imagePreviewFileMap, setImagePreviewFileMap] = useState<Record<string, File>>({})
   const [imageZoomOrigin, setImageZoomOrigin] = useState<Record<number, { x: number; y: number }>>({})
-  
-  // Brand image state
-  const [brandImage, setBrandImage] = useState<string>("") // Brand image URL
-  const [brandImageFile, setBrandImageFile] = useState<File | null>(null) // Brand image file
-  const [brandImagePreview, setBrandImagePreview] = useState<string>("") // Brand image preview URL
   
   // Separate state for colors and sizes arrays
   const [colors, setColors] = useState<string[]>([])
@@ -332,7 +328,20 @@ export default function ProductsPage() {
     fetchProducts()
     fetchAllCategories()
     fetchProductSectors()
+    fetchBrands()
   }, [])
+
+  const fetchBrands = async () => {
+    try {
+      const res = await fetch("/api/brands")
+      const result = await res.json()
+      if (result.success) {
+        setBrandsList(result.data)
+      }
+    } catch (err) {
+      console.error("Error fetching brands:", err)
+    }
+  }
 
   const fetchAllCategories = async () => {
     try {
@@ -558,11 +567,6 @@ export default function ProductsPage() {
       setImagePreviewFileMap({})
       rebuildImageCollections(normalizedImages, {})
       
-      // Set brand image
-      setBrandImage(product.brand_image || "")
-      setBrandImagePreview(product.brand_image || "")
-      setBrandImageFile(null)
-      
       // Set main category and load subcategories if mainCategory exists
       // Handle both names (new format) and IDs (old format) for backward compatibility
       if (product.mainCategory) {
@@ -622,9 +626,6 @@ export default function ProductsPage() {
       setSizes([])
       setColorInput("")
       setSizeInput("")
-      setBrandImage("")
-      setBrandImageFile(null)
-      setBrandImagePreview("")
     }
     setIsDialogOpen(true)
   }
@@ -670,9 +671,6 @@ export default function ProductsPage() {
     setImageFiles([])
     setImagePreviews([])
     setImagePreviewFileMap({})
-    setBrandImage("")
-    setBrandImageFile(null)
-    setBrandImagePreview("")
   }
   
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -741,29 +739,6 @@ export default function ProductsPage() {
     const [moved] = reordered.splice(fromIndex, 1)
     reordered.splice(toIndex, 0, moved)
     rebuildImageCollections(reordered, imagePreviewFileMap)
-  }
-  
-  const handleBrandImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    
-    if (file.type.startsWith('image/')) {
-      setBrandImageFile(file)
-      const preview = URL.createObjectURL(file)
-      setBrandImagePreview(preview)
-    }
-    
-    // Reset input
-    e.target.value = ''
-  }
-  
-  const handleRemoveBrandImage = () => {
-    if (brandImagePreview.startsWith('blob:')) {
-      URL.revokeObjectURL(brandImagePreview)
-    }
-    setBrandImage("")
-    setBrandImageFile(null)
-    setBrandImagePreview("")
   }
   
   const handleMainCategoryChange = async (mainCategoryId: string) => {
@@ -907,14 +882,6 @@ export default function ProductsPage() {
       formDataToSend.append('model_number', formData.modelNumber)
       formDataToSend.append('product_code', formData.productCode)
       formDataToSend.append('productTypes', JSON.stringify(formData.productTypes))
-      
-      // Append brand image if selected
-      if (brandImageFile) {
-        formDataToSend.append('brand_image', brandImageFile)
-      } else if (editingProduct && brandImage) {
-        // For updates, include existing brand image URL if no new file is selected
-        formDataToSend.append('brand_image_url', brandImage)
-      }
       
       // Append new image files
       imageFiles.forEach((file) => {
@@ -1460,14 +1427,22 @@ export default function ProductsPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="grid gap-2">
                       <Label htmlFor="brand">Брэнд (Brand) *</Label>
-                      <Input
-                        id="brand"
+                      <Select
                         value={formData.brand}
-                        onChange={(e) =>
-                          setFormData({ ...formData, brand: e.target.value })
-                        }
+                        onValueChange={(val) => setFormData({ ...formData, brand: val })}
                         required
-                      />
+                      >
+                        <SelectTrigger id="brand">
+                          <SelectValue placeholder="Брэнд сонгох" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {brandsList.map((b) => (
+                            <SelectItem key={b.id} value={b.name}>
+                              {b.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="color">Өнгө (Color) *</Label>
@@ -1524,59 +1499,6 @@ export default function ProductsPage() {
                       )}
                       {colors.length === 0 && (
                         <p className="text-xs text-muted-foreground">Add at least one color</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Brand Image Upload */}
-                  <div className="grid gap-2">
-                    <Label>Брэндийн зураг (Brand Image)</Label>
-                    <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-4">
-                      <div className="flex flex-col items-center justify-center gap-2">
-                        <input
-                          type="file"
-                          id="brand-image-upload"
-                          accept="image/*"
-                          onChange={handleBrandImageSelect}
-                          className="hidden"
-                          disabled={isUploadingImages}
-                        />
-                        <label
-                          htmlFor="brand-image-upload"
-                          className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-                            isUploadingImages
-                              ? "border-muted-foreground/25 bg-muted/50 cursor-not-allowed"
-                              : "border-primary/50 bg-muted/30 hover:bg-muted/50"
-                          }`}
-                        >
-                          <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-                          <p className="text-sm text-muted-foreground text-center">
-                            {brandImagePreview
-                              ? "Брэндийн зураг сонгогдсон (Brand image selected)"
-                              : "Брэндийн зураг сонгох (Click to select brand image)"}
-                          </p>
-                        </label>
-                      </div>
-
-                      {/* Brand Image Preview */}
-                      {brandImagePreview && (
-                        <div className="relative mt-4 flex justify-center">
-                          <div className="relative group">
-                            <img
-                              src={brandImagePreview}
-                              alt="Brand preview"
-                              className="w-32 h-32 object-cover rounded-md border"
-                            />
-                            <button
-                              type="button"
-                              onClick={handleRemoveBrandImage}
-                              className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                              disabled={isUploadingImages}
-                            >
-                              <XCircle className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </div>
                       )}
                     </div>
                   </div>

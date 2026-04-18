@@ -19,7 +19,9 @@ async function uploadImageToStorage(file: File): Promise<string> {
 
   const timestamp = Date.now()
   const randomString = Math.random().toString(36).substring(2, 15)
-  const fileExtension = file.name.split(".").pop()
+  const fromName = file.name.split(".").pop()?.toLowerCase()
+  const mimeMap: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/svg+xml": "svg", "image/webp": "webp", "image/gif": "gif", "image/bmp": "bmp" }
+  const fileExtension = (fromName && fromName.length > 0 && fromName !== file.name.toLowerCase()) ? fromName : (mimeMap[file.type] || "jpg")
   const fileName = `company_info/${timestamp}-${randomString}.${fileExtension}`
 
   const arrayBuffer = await file.arrayBuffer()

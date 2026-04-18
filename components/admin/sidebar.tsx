@@ -12,6 +12,7 @@ import {
   FolderTree,
   Newspaper,
   Building2,
+  Tag,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -52,6 +53,11 @@ const navigation = [
     name: "Company Info",
     href: "/admin/company-info",
     icon: Building2,
+  },
+  {
+    name: "Brands",
+    href: "/admin/brands",
+    icon: Tag,
   },
   {
     name: "Settings",
