@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return isAuthenticated() && 
+             firestore.get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    // CREATE ACTION: Allow authenticated users to create/upload files
+    // This rule allows file creation (upload) for authenticated users
+    match /{allPaths=**} {
+      // Allow create (file upload) for authenticated users
+      allow create: if isAuthenticated();
+      
+      // Allow read access to authenticated users
+      allow read: if isAuthenticated();
+      
+      // Allow update and delete to authenticated users
+      // For admin-only updates/deletes, use: allow update, delete: if isAdmin();
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // Specific path rules (optional - for more granular control)
+    // Example: User-specific uploads folder
+    match /uploads/{userId}/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update, delete: if isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Example: Public read, authenticated write
+    match /public/{allPaths=**} {
+      allow read: if true; // Anyone can read
+      allow create: if isAuthenticated(); // Only authenticated users can upload
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // Example: Admin-only folder
+    match /admin/{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Temporary fallback rule - expires after 30 days
+    // This rule allows anyone with your Storage bucket reference to view, edit,
+    // and delete all data in your Storage bucket. It is useful for getting
+    // started, but it is configured to expire after 30 days because it
+    // leaves your app open to attackers. At that time, all client
+    // requests to your Storage bucket will be denied.
+    //
+    // Make sure to write security rules for your app before that time, or else
+    // all client requests to your Storage bucket will be denied until you Update
+    // your rules
+    match /{allPaths=**} {
+      allow read, write: if request.time < timestamp.date(2026, 1, 28);
+    }
+  }
+}
+
