@@ -92,13 +92,13 @@ export default function QuotesPage() {
   const [quoteNumber, setQuoteNumber] = useState<string>("")
   const [quoteDate, setQuoteDate] = useState<string>("")
   const [companyNote, setCompanyNote] = useState<string>("")
-  const [companyName, setCompanyName] = useState<string>("OHSE ХХК")
-  const [companyAddress, setCompanyAddress] = useState<string>("УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
-  const [companyEmail, setCompanyEmail] = useState<string>("sales1@ohse.mn")
-  const [companyPhone, setCompanyPhone] = useState<string>("70118585")
-  const [companyMobile, setCompanyMobile] = useState<string>("99080867")
-  const [companyRegNumber, setCompanyRegNumber] = useState<string>("5332044")
-  const [companyBankName, setCompanyBankName] = useState<string>("Худалдаа хөгжлийн банк")
+  const [companyName, setCompanyName] = useState<string>("Сэйфти Фёрст ХХК")
+  const [companyAddress, setCompanyAddress] = useState<string>("СХДүүрэг 9 хороо 8 гудамж 2 тоот")
+  const [companyEmail, setCompanyEmail] = useState<string>("Safetyfirst.ohse@gmail.com")
+  const [companyPhone, setCompanyPhone] = useState<string>("90551234")
+  const [companyMobile, setCompanyMobile] = useState<string>("90551234")
+  const [companyRegNumber, setCompanyRegNumber] = useState<string>("1111111")
+  const [companyBankName, setCompanyBankName] = useState<string>("-")
   const [companyAccountNumber, setCompanyAccountNumber] = useState<string>("MN610004000 415148288")
   const [buyerRegNumber, setBuyerRegNumber] = useState<string>("")
   const [sendOfferQuantities, setSendOfferQuantities] = useState<Record<string, number>>({})
@@ -114,15 +114,15 @@ export default function QuotesPage() {
       setQuoteDate(currentDate)
       
       // Initialize Компанийн тэмдэглэл and company info from saved data
-      setCompanyName((selectedQuote as any).companyName || "OHSE ХХК")
+      setCompanyName((selectedQuote as any).companyName || "Сэйфти Фёрст ХХК")
       setCompanyNote((selectedQuote as any).companyNote || "")
-      setCompanyAddress((selectedQuote as any).companyAddress || "УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
-      setCompanyEmail((selectedQuote as any).companyEmail || "sales1@ohse.mn")
-      setCompanyPhone((selectedQuote as any).companyPhone || "70118585")
-      setCompanyMobile((selectedQuote as any).companyMobile || "99080867")
-      setCompanyRegNumber((selectedQuote as any).companyRegNumber || "5332044")
-      setCompanyBankName((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк")
-      setCompanyAccountNumber((selectedQuote as any).companyAccountNumber || "MN610004000 415148288")
+      setCompanyAddress((selectedQuote as any).companyAddress || "СХДүүрэг 9 хороо 8 гудамж 2 тоот")
+      setCompanyEmail((selectedQuote as any).companyEmail || "Safetyfirst.ohse@gmail.com")
+      setCompanyPhone((selectedQuote as any).companyPhone || "90551234")
+      setCompanyMobile((selectedQuote as any).companyMobile || "90551234")
+      setCompanyRegNumber((selectedQuote as any).companyRegNumber || "1111111")
+      setCompanyBankName((selectedQuote as any).companyBankName || "Банкны нэр")
+      setCompanyAccountNumber((selectedQuote as any).companyAccountNumber || "Дансны дугаар")
       setBuyerRegNumber((selectedQuote as any).buyerRegNumber || "")
       
       // Initialize quantities and delivery times for selected products
@@ -165,15 +165,15 @@ export default function QuotesPage() {
       // Reset when dialog closes
       setQuoteNumber("")
       setQuoteDate("")
-      setCompanyName("OHSE ХХК")
+      setCompanyName("Сэйфти Фёрст ХХК")
       setCompanyNote("")
-      setCompanyAddress("УБ хот, Хан-Уул дүүрэг, 20-р хороо, Чингисийн өргөн чөлөө, Мишээл сити оффис М1 тауэр, 11 давхарт, 1107, 1108 тоот")
-      setCompanyEmail("sales1@ohse.mn")
-      setCompanyPhone("70118585")
-      setCompanyMobile("99080867")
-      setCompanyRegNumber("5332044")
-      setCompanyBankName("Худалдаа хөгжлийн банк")
-      setCompanyAccountNumber("MN610004000 415148288")
+      setCompanyAddress("СХДүүрэг 9 хороо 8 гудамж 2 тоот")
+      setCompanyEmail("Safetyfirst.ohse@gmail.com")
+      setCompanyPhone("90551234")
+      setCompanyMobile("90551234")
+      setCompanyRegNumber("1111111")
+      setCompanyBankName("Банкны нэр")
+      setCompanyAccountNumber("Дансны дугаар")
       setBuyerRegNumber("")
       setSendOfferQuantities({})
       setSendOfferDeliveryTimes({})
@@ -3032,15 +3032,15 @@ export default function QuotesPage() {
                     
                     // Save Компанийн тэмдэглэл, company info, and updated products
                     const hasChanges = 
-                      companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
+                      companyBankName !== ((selectedQuote as any).companyBankName || "-") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "Сэйфти Фёрст ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
                       companyPhone !== ((selectedQuote as any).companyPhone || "") ||
                       companyMobile !== ((selectedQuote as any).companyMobile || "") ||
-                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "5332044") ||
+                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "1111111") ||
                       buyerRegNumber !== ((selectedQuote as any).buyerRegNumber || "") ||
                       JSON.stringify(updatedProducts) !== JSON.stringify(selectedQuote.selectedProducts)
                     
@@ -3469,15 +3469,15 @@ export default function QuotesPage() {
                       invoiceNumber !== ((selectedQuote as any).invoiceNumber || "") ||
                       invoiceDate !== ((selectedQuote as any).invoiceDate || "") ||
                       paymentDueDate !== ((selectedQuote as any).paymentDueDate || "") ||
-                      companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
+                      companyBankName !== ((selectedQuote as any).companyBankName || "-") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "Сэйфти Фёрст ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
                       companyPhone !== ((selectedQuote as any).companyPhone || "") ||
                       companyMobile !== ((selectedQuote as any).companyMobile || "") ||
-                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "5332044") ||
+                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "1111111") ||
                       buyerRegNumber !== ((selectedQuote as any).buyerRegNumber || "") ||
                       JSON.stringify(updatedProducts) !== JSON.stringify(selectedQuote.selectedProducts)
 
@@ -3791,7 +3791,7 @@ export default function QuotesPage() {
                       <Input
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
-                        placeholder="OHSE ХХК"
+                        placeholder="Сэйфти Фёрст ХХК"
                       />
                     </div>
                     <div>
@@ -3905,15 +3905,15 @@ export default function QuotesPage() {
                     const hasChanges = 
                       spentNumber !== ((selectedQuote as any).spentNumber || "") ||
                       spentDate !== ((selectedQuote as any).spentDate || "") ||
-                      companyBankName !== ((selectedQuote as any).companyBankName || "Худалдаа хөгжлийн банк") ||
+                      companyBankName !== ((selectedQuote as any).companyBankName || "-") ||
                       companyAccountNumber !== ((selectedQuote as any).companyAccountNumber || "MN610004000 415148288") ||
-                      companyName !== ((selectedQuote as any).companyName || "OHSE ХХК") ||
+                      companyName !== ((selectedQuote as any).companyName || "Сэйфти Фёрст ХХК") ||
                       companyNote !== ((selectedQuote as any).companyNote || "") ||
                       companyAddress !== ((selectedQuote as any).companyAddress || "") ||
                       companyEmail !== ((selectedQuote as any).companyEmail || "") ||
                       companyPhone !== ((selectedQuote as any).companyPhone || "") ||
                       companyMobile !== ((selectedQuote as any).companyMobile || "") ||
-                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "5332044") ||
+                      companyRegNumber !== ((selectedQuote as any).companyRegNumber || "1111111") ||
                       buyerRegNumber !== ((selectedQuote as any).buyerRegNumber || "") ||
                       JSON.stringify(updatedProducts) !== JSON.stringify(selectedQuote.selectedProducts)
 
