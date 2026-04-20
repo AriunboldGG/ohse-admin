@@ -154,7 +154,7 @@ export default function QuotesPage() {
             const year = new Date().getFullYear()
             const month = String(new Date().getMonth() + 1).padStart(2, '0')
             const day = String(new Date().getDate()).padStart(2, '0')
-            setQuoteNumber(`BU-QT-${year}${month}${day}-001`)
+            setQuoteNumber(`OHSE-QT-${year}${month}${day}-001`)
           }
         })
       
@@ -214,7 +214,7 @@ export default function QuotesPage() {
             const year = new Date().getFullYear()
             const month = String(new Date().getMonth() + 1).padStart(2, '0')
             const day = String(new Date().getDate()).padStart(2, '0')
-            setInvoiceNumber(`BU-INV-${year}${month}${day}-001`)
+            setInvoiceNumber(`OHSE-INV-${year}${month}${day}-001`)
           })
       }
       if (savedInvoiceDate) {
@@ -265,7 +265,7 @@ export default function QuotesPage() {
             const year = new Date().getFullYear()
             const month = String(new Date().getMonth() + 1).padStart(2, '0')
             const day = String(new Date().getDate()).padStart(2, '0')
-            setSpentNumber(`BU-EXP-${year}${month}${day}-001`)
+            setSpentNumber(`OHSE-EXP-${year}${month}${day}-001`)
           })
       }
       if (savedSpentDate) {
@@ -279,7 +279,7 @@ export default function QuotesPage() {
     }
   }, [isSpentDialogOpen, selectedQuote?.id])
 
-  // Function to generate quote number in format: BU-QT-YYYYMMDD-XXX
+  // Function to generate quote number in format: OHSE-QT-YYYYMMDD-XXX
   const generateQuoteNumber = async (quoteDate?: string): Promise<string> => {
     // Use provided date or current date
     const date = quoteDate ? new Date(quoteDate) : new Date()
@@ -288,8 +288,8 @@ export default function QuotesPage() {
     const day = String(date.getDate()).padStart(2, '0')
     const dateStr = `${year}${month}${day}` // YYYYMMDD format
     
-    // Format: BU-QT-YYYYMMDD-XXX
-    const prefix = `BU-QT-${dateStr}`
+    // Format: OHSE-QT-YYYYMMDD-XXX
+    const prefix = `OHSE-QT-${dateStr}`
     
     try {
       // Fetch all quotes to check for existing quote numbers
@@ -345,14 +345,14 @@ export default function QuotesPage() {
     return `${prefix}-001`
   }
 
-  // Function to generate invoice number in format: BU-INV-YYYYMMDD-XXX
+  // Function to generate invoice number in format: OHSE-INV-YYYYMMDD-XXX
   const generateInvoiceNumber = async (invoiceDate?: string): Promise<string> => {
     const date = invoiceDate ? new Date(invoiceDate) : new Date()
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     const dateStr = `${year}${month}${day}`
-    const prefix = `BU-INV-${dateStr}`
+    const prefix = `OHSE-INV-${dateStr}`
 
     try {
       const response = await fetch("/api/quotes")
@@ -395,14 +395,14 @@ export default function QuotesPage() {
     return `${prefix}-001`
   }
 
-  // Function to generate expense receipt number in format: BU-EXP-YYYYMMDD-XXX
+  // Function to generate expense receipt number in format: OHSE-EXP-YYYYMMDD-XXX
   const generateSpentNumber = async (spentDateValue?: string): Promise<string> => {
     const date = spentDateValue ? new Date(spentDateValue) : new Date()
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     const dateStr = `${year}${month}${day}`
-    const prefix = `BU-EXP-${dateStr}`
+    const prefix = `OHSE-EXP-${dateStr}`
 
     try {
       const response = await fetch("/api/quotes")
