@@ -31,11 +31,11 @@ const formatProductCode = (value: unknown): string => {
   if (value === undefined || value === null) return ""
   const raw = String(value).trim()
   if (!raw) return ""
-  if (/^BK-\d{7}$/.test(raw)) return raw
+  if (/^PN-\d{7}$/.test(raw)) return raw
   const digits = raw.match(/\d+/g)?.join("") || ""
   if (!digits) return ""
   const normalized = digits.length > 7 ? digits.slice(-7) : digits.padStart(7, "0")
-  return `BK-${normalized}`
+  return `PN-${normalized}`
 }
 
 const getNextProductCode = async (): Promise<string> => {
@@ -47,7 +47,7 @@ const getNextProductCode = async (): Promise<string> => {
 
     const next = current + 1
     transaction.set(counterRef, { current: next }, { merge: true })
-    return `BK-${String(next).padStart(7, "0")}`
+    return `PN-${String(next).padStart(7, "0")}`
   })
 }
 
