@@ -846,15 +846,6 @@ export default function ProductsPage() {
       const categoryName = getCategoryNameById(formData.category)
       const subcategoryName = formData.subcategory ? getCategoryNameById(formData.subcategory) : ""
       
-      // Debug logging to verify conversion
-      console.log("Category conversion:", {
-        selectedMainCategory,
-        mainCategoryName,
-        categoryId: formData.category,
-        categoryName,
-        subcategoryId: formData.subcategory,
-        subcategoryName
-      })
       
       // Create FormData with product data and images
       const formDataToSend = new FormData()
@@ -884,6 +875,14 @@ export default function ProductsPage() {
       formDataToSend.append('productTypes', JSON.stringify(formData.productTypes))
       
       // Append new image files
+      const MAX_TOTAL_SIZE = 3.5 * 1024 * 1024 // 3.5MB total to stay under Vercel's 4.5MB limit
+      const totalImageSize = imageFiles.reduce((sum, f) => sum + f.size, 0)
+      if (totalImageSize > MAX_TOTAL_SIZE) {
+        alert(`Зургийн нийт хэмжээ ${(totalImageSize / 1024 / 1024).toFixed(1)}MB байна. 3.5MB-аас бага байх ёстой. Зургийн хэмжээг багасгаад дахин оролдоно уу. (Total image size exceeds 3.5MB limit.)`)
+        setIsSubmitting(false)
+        setIsUploadingImages(false)
+        return
+      }
       imageFiles.forEach((file) => {
         formDataToSend.append('images', file)
       })
@@ -900,7 +899,19 @@ export default function ProductsPage() {
           body: formDataToSend,
         })
 
-        const result = await response.json()
+        if (response.status === 413) {
+          alert("Зургийн файл хэт том байна. Зургийн хэмжээг багасгаад дахин оролдоно уу. (Images are too large. Please reduce image sizes and try again.)")
+          return
+        }
+
+        let result: any
+        try {
+          result = await response.json()
+        } catch {
+          alert(`Server error (${response.status}). Please try again.`)
+          return
+        }
+
         if (result.success) {
           await fetchProducts() // Refresh the list
           handleCloseDialog()
@@ -914,7 +925,19 @@ export default function ProductsPage() {
           body: formDataToSend,
         })
 
-        const result = await response.json()
+        if (response.status === 413) {
+          alert("Зургийн файл хэт том байна. Зургийн хэмжээг багасгаад дахин оролдоно уу. (Images are too large. Please reduce image sizes and try again.)")
+          return
+        }
+
+        let result: any
+        try {
+          result = await response.json()
+        } catch {
+          alert(`Server error (${response.status}). Please try again.`)
+          return
+        }
+
         if (result.success) {
           await fetchProducts() // Refresh the list
           handleCloseDialog()
